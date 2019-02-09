@@ -7,6 +7,7 @@ var indexRouter = require('./routes/index');
 var infosRouter = require('./routes/infos');
 var shuttersRouter = require('./routes/shutters');
 var bodyParser = require('body-parser');
+var periodicRules = require('./modules/periodicrules');
 
 var app = express();
 app.use(bodyParser.json()); // support json encoded bodies
@@ -20,5 +21,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/infos', infosRouter);
 app.use('/shutters', shuttersRouter);
+
+
+periodicRules.start();
 
 module.exports = app;
