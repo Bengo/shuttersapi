@@ -3,37 +3,37 @@ const Gpio = require('onoff').Gpio;
 var sleep = require('sleep');
 
 //set 1 sleep set 0 sleep
-function edge(gpio, nbIter) {
+function edge(pin, nbIter) {
     let i = 0 ;
     while(i<nbIter){
-        gpio.writeSync(1);
+        pin.writeSync(1);
         sleep.msleep(100);
-        gpio.writeSync(0);
+        pin.writeSync(0);
         sleep.msleep(100);
         i++;
     }
 }
 
 //action Pin
-function actionPin(gpio, position){
-    gpio.writeSync(0);
+function actionPin(pin, position){
+    pin.writeSync(0);
     if(position === 'top') {
-        edge(gpio, 3);
+        edge(pin, 3);
     }
     if(position === 'bottom') {
-        edge(gpio, 4);
+        edge(pin, 4);
     }
     if(position === 'intermediate'){
 		// top
-		edge(gpio, 3);
+		edge(pin, 3);
 		//on attend que les volets soient leves
 		sleep.sleep(18);
 		//bottom
-		edge(gpio, 4);
+		edge(pin, 4);
 		//on attend d'atteindre le position intermediaire
 		sleep.msleep(8800);
 		//stop
-        edge(gpio, 1);
+        edge(pin, 1);
     }
 }
 
