@@ -48,47 +48,25 @@ exports.goTo = function (zone, position) {
     //generale : zone 4
     let generale;
 
-    if(Gpio.accessible()) {
-        if(zone === '1'){
-            chBas = new Gpio(17, 'out');
-            actionPin(chBas, position);
-        }
-        if(zone === '2'){
-            chHaut = new Gpio(27, 'out');
-            actionPin(chHaut, position);
-        }
-        if(zone === '3'){
-            pdv = new Gpio(18, 'out');
-            actionPin(pdv, position);
-        }
-        if(zone === '4') {
-            chBas = new Gpio(17, 'out');
-            chHaut = new Gpio(27, 'out');
-            pdv = new Gpio(18, 'out');
-            actionPin(chBas, position);
-            actionPin(chHaut, position);
-            actionPin(pdv, position);
-        }
-      } else {
-        chBas = {
-          writeSync: (value) => {
-            console.log('virtual chBas now uses value: ' + value);
-          }
-        };
-        chHaut = {
-            writeSync: (value) => {
-              console.log('virtual chHaut now uses value: ' + value);
-            }
-          };
-        pdv = {
-            writeSync: (value) => {
-                console.log('virtual pdv now uses value: ' + value);
-            }
-        };
-        generale = {
-            writeSync: (value) => {
-                console.log('virtual generale now uses value: ' + value);
-            }
-        };
+    if(zone === '1'){
+        chBas = new Gpio(17, 'out');
+        actionPin(chBas, position);
     }
+    if(zone === '2'){
+        chHaut = new Gpio(27, 'out');
+        actionPin(chHaut, position);
+    }
+    if(zone === '3'){
+        pdv = new Gpio(18, 'out');
+        actionPin(pdv, position);
+    }
+    if(zone === '4') {
+        chBas = new Gpio(17, 'out');
+        chHaut = new Gpio(27, 'out');
+        pdv = new Gpio(18, 'out');
+        actionPin(chBas, position);
+        actionPin(chHaut, position);
+        actionPin(pdv, position);
+    }
+
 };
