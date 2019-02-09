@@ -1,43 +1,68 @@
 const schedule = require('node-schedule');
 const SunCalc = require('suncalc');
 const shutters = require('./shutters');
+const configRules = require('./configRules');
 
 const everyDayRule = new schedule.RecurrenceRule();
 everyDayRule.hour = 0;
 everyDayRule.minute = 0;
 
-let upSchedule = null;
-let downSchedule = null;
+var upSchedulers = new Map();
+var downSchedulers = new Map();
 
 //instantiate the schedulers for opening and closing shutters
-function initAutomaticShutters(){
+function initAutomaticShutters(zone){
   //Saint-Renan
   const times = SunCalc.getTimes( new Date(), 48.4333, -4.6167);
-  console.log(times.sunriseEnd+ ' - '+times.sunset);
-  if(upSchedule){
-    upSchedule.cancel();
+
+  if(upSchedulers && upSchedulers.get(zone)){
+    upSchedulers.get(zone).cancel();
   } 
-  upSchedule = schedule.scheduleJob(times.sunriseEnd, function(){
-    //pdv
-    shutters.goTo('3','top');
-  });
-  
-  if(downSchedule){
-    downSchedule.cancel();
+  if(downSchedulers && downSchedulers.get(zone)){
+    downSchedulers.get(zone).cancel();
   }
-  downSchedule = schedule.scheduleJob(times.sunset, function(){
-    //pdv
-    shutters.goTo('3','bottom');
-  });
+
+  if(configRules.isActive(zone,times.sunriseEnd)){
+    console.log('times.sunriseEnd :'+times.sunriseEnd);
+    console.log('times.sunset :'+times.sunset);
+    const cronUp = times.sunriseEnd.getMinutes()+' '+times.sunriseEnd.getHours()+' * * *';
+    console.log('cronup :'+cronUp);
+    upSchedulers.set(zone,
+      schedule.scheduleJob(cronUp, function(){
+        shutters.goTo(zone,'top');
+      })
+    );
+    const cronDown = times.sunset.getMinutes()+' '+times.sunset.getHours()+' * * *';
+    console.log('cronDown :'+cronDown);
+    downSchedulers.set(zone,
+       schedule.scheduleJob(cronDown, function(){
+        shutters.goTo(zone,'bottom');
+      })
+    );
+  }
+
+  console.log(new Date() + ' : init shutters schedulers done ! ');
 }
 
 exports.start = function (){
-    //every day we start the job calculating for opening and closing shutters
+    //on startup and every day we start the job calculating for opening and closing shutters
+   initAutomaticShutters('3');
+
    schedule.scheduleJob(everyDayRule, function(){
-        initAutomaticShutters();
+        initAutomaticShutters('3');
     });
 };
 
-exports.stop = function (){
+exports.infos = function (){
 
+  const infos = {};
+  infos.nextUp = [];
+  if(upSchedulers.get('3')){
+    infos.nextUp[3] = new Date(upSchedulers.get('3').nextInvocation()).toLocaleTimeString();
+  }
+  infos.nextDown = [];
+  if(downSchedulers.get('3')){
+    infos.nextDown[3] = new Date(downSchedulers.get('3').nextInvocation()).toLocaleTimeString();
+  }
+  return infos;
 };
