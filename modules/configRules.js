@@ -1,6 +1,7 @@
 const fs = require("fs");
-
-const config = JSON.parse(fs.readFileSync('./config/config.json'))
+const path = require("path");
+    
+const config = JSON.parse(fs.readFileSync(path.resolve(__dirname,'../config/config.json')));
 exports.config = config;
 
 //return the cron execution date for opening the zone or null if non activ
