@@ -33,9 +33,9 @@ function initUpSchedulers(times){
     if(cronUp){
       console.log('zone '+zone+' - cronup :'+cronUp);
       upSchedulers.set(zone,
-        schedule.scheduleJob(cronUp, function(){
+        schedule.scheduleJob(cronUp, function(zone){
           shutters.goTo(zone,'top');
-        })
+        }.bind(null, zone))
       );
     }
   }
@@ -49,12 +49,13 @@ function initDownSchedulers(times){
     if(cronDown){
       console.log('zone '+zone+ ' - cronDown :'+cronDown);
       downSchedulers.set(zone,
-          schedule.scheduleJob(cronDown, function(){
+          schedule.scheduleJob(zone, cronDown, function(zone){
           shutters.goTo(zone,'bottom');
-        })
+        }.bind(null, zone))
       );
     }
   }
+
 }
 
 //instantiate the schedulers for opening and closing shutters
