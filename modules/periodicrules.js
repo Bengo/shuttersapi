@@ -93,12 +93,20 @@ exports.infos = function (){
 
   const infos = {};
   infos.nextUp = [];
-  if(upSchedulers.get('3')){
-    infos.nextUp[3] = new Date(upSchedulers.get('3').nextInvocation()).toLocaleTimeString();
-  }
+
+  upSchedulers.forEach(function(schedule,zone ){
+    const upZone = {};
+    upZone.zone = zone;
+    upZone.date = new Date(schedule.nextInvocation()).toLocaleString();
+    infos.nextUp.push(upZone);
+  });
+
   infos.nextDown = [];
-  if(downSchedulers.get('3')){
-    infos.nextDown[3] = new Date(downSchedulers.get('3').nextInvocation()).toLocaleTimeString();
-  }
+  downSchedulers.forEach(function(schedule,zone ){
+    const downZone = {};
+    downZone.zone = zone;
+    downZone.date = new Date(schedule.nextInvocation()).toLocaleString();
+    infos.nextDown.push(downZone);
+  });
   return infos;
 };
