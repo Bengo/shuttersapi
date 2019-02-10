@@ -1,0 +1,155 @@
+{
+	"zone": {
+		"1": {
+			"label": "Chambre Parental",
+			"pin": "18",
+			"up": {
+                "hours": "07",
+                "minutes" : "45"
+            },
+            "down": {
+                "hours": "22",
+                "minutes" : "30"
+            }
+		},
+		"2": {
+			"label": "Chambres des enfants",
+			"pin": "17",
+			"up": {
+                "hours": "07",
+                "minutes" : "45"
+            },
+            "down": {
+                "hours": "20",
+                "minutes" : "00"
+            }
+		},
+		"3": {
+			"label": "Pièce de vie",
+			"pin": "27",
+			"up": {
+                "hours": "11",
+                "minutes" : "00"
+            },
+            "down": {
+                "hours": "23",
+                "minutes" : "30"
+            }
+		}
+	},
+	"mode": {
+		"normal": {
+			"desc": "Jour de tous les jours (boulot, école)",
+			"zone": {
+				"1": {
+					"up": "time",
+					"down": "sun"
+				},
+				"2": {
+					"up": "time",
+					"down": "sun"
+				},
+				"3": {
+					"up": "sun",
+					"down": "sun"
+				}
+			}
+		},
+		"vacancesWE": {
+			"desc": "Vacances et WE a la maison (grasse matinée souhaitée !)",
+			"zone": {
+				"1": {
+					"up": "off",
+					"down": "sun"
+				},
+				"2": {
+					"up": "off",
+					"down": "sun"
+				},
+				"3": {
+					"up": "sun",
+					"down": "sun"
+				}
+			}
+		},
+		"abscence": {
+			"desc": "Simulation de présence",
+			"zone": {
+				"1": {
+					"up": "sun",
+					"down": "sun"
+				},
+				"2": {
+					"up": "sun",
+					"down": "sun"
+				},
+				"3": {
+					"up": "sun",
+					"down": "sun"
+				}
+			}
+		},
+		"fete": {
+			"desc": "Apéro tardif en terrasse, et grasse matinée",
+			"zone": {
+				"1": {
+					"up": "off",
+					"down": "sun"
+				},
+				"2": {
+					"up": "off",
+					"down": "sun"
+				},
+				"3": {
+					"up": "time",
+					"down": "off"
+				}
+			}
+		}
+	},
+	"position": {
+		"intermediate": {
+			"desc": "Fermeture partiel pour protéger du soleil sans collision avec les siestes éventuelles",
+			"startTime": "09h30",
+			"stopTime": "16h00",
+			"napStartTime": "13h00",
+			"napStopTime": "16h00",
+			"tempMin": "19",
+			"windMax": "25",
+			"auto": "Femeture partiel automatique",
+			"time": "Femeture partiel automatique sauf sur les heures de sieste",
+			"off": "Pas de fermeture partiel",
+			"mode": {
+				"normal": {
+					"zone": {
+						"1": "auto",
+						"2": "auto",
+						"3": "auto"
+					}
+				},
+				"vacancesWE": {
+					"zone": {
+						"1": "time",
+						"2": "time",
+						"3": "auto"
+					}
+				},
+				"abscence": {
+					"zone": {
+						"1": "auto",
+						"2": "auto",
+						"3": "auto"
+					}
+				},
+				"fete": {
+					"zone": {
+						"1": "off",
+						"2": "off",
+						"3": "auto"
+					}
+				}
+			}
+		}
+    },
+    "currentMode" : "normal"
+}

@@ -22,7 +22,6 @@ app.use('/', indexRouter);
 app.use('/infos', infosRouter);
 app.use('/shutters', shuttersRouter);
 
-
 periodicRules.start();
 
 module.exports = app;
