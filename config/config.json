@@ -28,8 +28,8 @@
 			"label": "Pièce de vie",
 			"pin": "27",
 			"up": {
-                "hours": "11",
-                "minutes" : "00"
+                "hours": "08",
+                "minutes" : "02"
             },
             "down": {
                 "hours": "23",
@@ -47,10 +47,10 @@
 				},
 				"2": {
 					"up": "time",
-					"down": "sun"
+					"down": "time"
 				},
 				"3": {
-					"up": "sun",
+					"up": "sunTime",
 					"down": "sun"
 				}
 			}

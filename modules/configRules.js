@@ -26,6 +26,21 @@ exports.getCronUp = function (zone, date){
         const minutes = config.zone[zone].up["minutes"];
         cronUp = minutes+' '+hours+' * * *';
     }
+    //heure du soleil ou avant 
+    if(upConf && upConf === "sunTime"){
+        const hours = config.zone[zone].up["hours"];
+        const minutes = config.zone[zone].up["minutes"];
+        var todayMax = new Date();
+        todayMax.setHours(hours);
+        todayMax.setMinutes(minutes);
+        todayMax.setSeconds(0);
+        if(date<todayMax) {
+            cronUp = date.getMinutes()+' '+date.getHours()+' * * *';
+        } else {
+            cronUp = minutes+' '+hours+' * * *';
+        }  
+    }
+    
     // no conf or off
     return cronUp;   
 }
