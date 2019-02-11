@@ -4,9 +4,8 @@ const SunCalc = require('suncalc');
 const shutters = require('./shutters');
 const configRules = require('./configRules');
 
-const everyDayRule = new schedule.RecurrenceRule();
-everyDayRule.hour = 1;
-everyDayRule.minute = 0;
+
+var dailyScheduler = null;
 
 var upSchedulers = new Map();
 var downSchedulers = new Map();
@@ -70,7 +69,7 @@ function initAutomaticShutters(){
       configRules.config.currentMode = "vacancesWE";
     }
   }
-  console.log("current mode", configRules.config.currentMode);
+  console.log(new Date() +" current mode ", configRules.config.currentMode);
   cancelSchedulers();
 
   initUpSchedulers(times);
@@ -83,8 +82,11 @@ exports.start = function (){
 
     //on startup and every day we start the job calculating for opening and closing shutters
    initAutomaticShutters();
+   const everyDayRule = new schedule.RecurrenceRule();
+   everyDayRule.hour = 4;
+   everyDayRule.minute = 0;
 
-   schedule.scheduleJob(everyDayRule, function(){
+   dailyScheduler = schedule.scheduleJob(everyDayRule, function(){
         initAutomaticShutters();
     });
 };
@@ -108,5 +110,8 @@ exports.infos = function (){
     downZone.date = new Date(schedule.nextInvocation()).toLocaleString();
     infos.nextDown.push(downZone);
   });
+
+  infos.nextDaily = {};
+  infos.nextDaily.date = new Date(dailyScheduler.nextInvocation()).toLocaleString();
   return infos;
 };
