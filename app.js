@@ -6,6 +6,8 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var infosRouter = require('./routes/infos');
 var shuttersRouter = require('./routes/shutters');
+var modeRouter = require('./routes/mode');
+
 var bodyParser = require('body-parser');
 var periodicRules = require('./modules/periodicrules');
 
@@ -22,6 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/infos', infosRouter);
 app.use('/shutters', shuttersRouter);
+app.use('/mode', modeRouter);
 
 periodicRules.start();
 

@@ -55,8 +55,25 @@
 				}
 			}
 		},
-		"vacancesWE": {
-			"desc": "Vacances et WE a la maison (grasse matinée souhaitée !)",
+		"msd": {
+			"desc": "Mercredi, Samedi, Dimanche (iso vacances mais avec retour au mode normal)",
+			"zone": {
+				"1": {
+					"up": "off",
+					"down": "sun"
+				},
+				"2": {
+					"up": "off",
+					"down": "sun"
+				},
+				"3": {
+					"up": "sun",
+					"down": "sun"
+				}
+			}
+		},
+		"vacances": {
+			"desc": "Vacances a la maison (grasse matinée souhaitée !)",
 			"zone": {
 				"1": {
 					"up": "off",
@@ -101,7 +118,7 @@
 					"down": "sun"
 				},
 				"3": {
-					"up": "time",
+					"up": "off",
 					"down": "off"
 				}
 			}
@@ -127,7 +144,14 @@
 						"3": "auto"
 					}
 				},
-				"vacancesWE": {
+				"msd": {
+					"zone": {
+						"1": "time",
+						"2": "time",
+						"3": "auto"
+					}
+				},
+				"vacances": {
 					"zone": {
 						"1": "time",
 						"2": "time",
