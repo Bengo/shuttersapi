@@ -47,7 +47,7 @@
 				},
 				"2": {
 					"up": "time",
-					"down": "time"
+					"down": "sunTime"
 				},
 				"3": {
 					"up": "sunTime",

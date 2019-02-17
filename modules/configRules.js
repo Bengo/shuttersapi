@@ -68,6 +68,23 @@ exports.getCronDown = function (zone, date){
         cronDown = minutes+' '+hours+' * * *';
     }
 
+    //heure du soleil ou avant 
+    if(downConf && downConf === "sunTime"){
+        
+        const hours = config.zone[zone].down["hours"];
+        const minutes = config.zone[zone].down["minutes"];
+        var todayMax = new Date();
+        todayMax.setHours(hours);
+        todayMax.setMinutes(minutes);
+        todayMax.setSeconds(0);
+
+        if(date<todayMax) {
+            cronDown = date.getMinutes()+' '+date.getHours()+' * * *';
+        } else {
+            cronDown = minutes+' '+hours+' * * *';
+        }  
+    }
+
     // no conf or off
     return cronDown;
 }

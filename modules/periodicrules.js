@@ -70,7 +70,9 @@ function initAutomaticShutters(){
     } 
   } else if(configRules.config.currentMode === "msd"){
     const todayDay = new Date().getDay();
-    if(todayDay !== 0 || todayDay !== 6 || todayDay !== 3){
+    if(todayDay !== 0 && todayDay != 6 && todayDay != 3){
+      console.log("todayDay: "+todayDay+"  setting normal");
+
       configRules.config.currentMode = "normal";
     } 
   }
