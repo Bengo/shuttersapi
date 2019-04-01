@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var shutters = require('../modules/shutters');
+const Shutters = require('../modules/shutters');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -15,7 +15,7 @@ router.post('/:zone', function(req, res, next) {
   if(req.body.position !== 'top' && req.body.position !== 'bottom' && req.body.position !== 'intermediate'){
     res.status('400').send('bad position parameter');
   }
-
+  let shutters = new Shutters();
   shutters.goTo(req.params.zone, req.body.position);
   res.send('receive command for zone '+ req.params.zone + ' to go to position ' + req.body.position);
 })

@@ -1,9 +1,9 @@
 const schedule = require('node-schedule');
 const SunCalc = require('suncalc');
+const weather = require('openweather-apis');
 
 const shutters = require('./shutters');
 const configRules = require('./configRules');
-
 
 var dailyScheduler = null;
 
@@ -85,10 +85,33 @@ function initAutomaticShutters(){
  
 }
 
+function getCurrentWeather() {
+  weather.setLang('fr');
+  weather.setCoordinate(48.4333, -4.6167);
+  weather.setUnits('metric');
+  weather.setAPPID('d9ade1db2996b5348874f4c4dd2592b6');
+  
+  // get a simple JSON Object with temperature, humidity, pressure and description
+  weather.getSmartJSON(function(err, JSONObj){
+      configRules.weather = JSONObj;
+      console.log(JSONObj);
+  });
+  
+}
+
+function checkIntermediate() {
+  const currentWeather = configRules.weather;
+  //if temp > 19 and weathercode (800,801,802) --> go To Intermediate position
+  if(currentWeather.temp >= 19 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
+    console.log('Set Intermediate Position because weather is:'+ JSON.stringify(currentWeather));
+    } 
+}
+
 exports.start = function (){
 
     //on startup and every day we start the job calculating for opening and closing shutters
    initAutomaticShutters();
+   getCurrentWeather();
    const everyDayRule = new schedule.RecurrenceRule();
    everyDayRule.hour = 4;
    everyDayRule.minute = 0;
@@ -96,6 +119,22 @@ exports.start = function (){
    dailyScheduler = schedule.scheduleJob(everyDayRule, function(){
         initAutomaticShutters();
     });
+    
+    //every hour get currentWeather
+    schedule.scheduleJob('34 * * * *', function(){
+      getCurrentWeather();
+    }); 
+
+    //every hour between 7 and 18h
+    schedule.scheduleJob('15 7-18 * * *', function(){
+      checkIntermediate();
+    });
+    
+    setTimeout(function(){
+      checkIntermediate();
+    },1000);
+    
+
 };
 
 exports.update = function (){
@@ -124,5 +163,6 @@ exports.infos = function (){
 
   infos.nextDaily = {};
   infos.nextDaily.date = new Date(dailyScheduler.nextInvocation()).toLocaleString();
+  infos.weather = configRules.weather;
   return infos;
 };
