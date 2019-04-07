@@ -74,26 +74,27 @@ class Shutters{
                 actionPin(pdv, position);
             }
         } else {
-            chBas = {
-            writeSync: (value) => {
-                console.log('virtual chBas now uses value: ' + value);
-            }
-            };
-            chHaut = {
+
+            if(zone === '1'){
                 writeSync: (value) => {
-                console.log('virtual chHaut now uses value: ' + value);
+                    console.log('virtual chBas now uses value: ' + value);
                 }
-            };
-            pdv = {
+            }
+            if(zone === '2'){
+                writeSync: (value) => {
+                    console.log('virtual chHaut now uses value: ' + value);
+                    }
+            }
+            if(zone === '3'){
                 writeSync: (value) => {
                     console.log('virtual pdv now uses value: ' + value);
                 }
-            };
-            generale = {
+            }
+            if(zone === '4') {
                 writeSync: (value) => {
                     console.log('virtual generale now uses value: ' + value);
                 }
-            };
+            }
         }
     };
 }

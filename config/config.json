@@ -73,7 +73,7 @@
 			}
 		},
 		"vacances": {
-			"desc": "Vacances a la maison (grasse matinée souhaitée !)",
+			"desc": "Vacances a la maison (grasse matinée et sieste souhaitée !)",
 			"zone": {
 				"1": {
 					"up": "off",
@@ -175,5 +175,8 @@
 			}
 		}
     },
-    "currentMode" : "normal"
+	"currentMode" : "normal",
+	"today" :{
+		"intermediate" : false
+	}
 }

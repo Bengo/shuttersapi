@@ -16,6 +16,7 @@ router.post('/:zone', function(req, res, next) {
     res.status('400').send('bad position parameter');
   }
   let shutters = new Shutters();
+
   shutters.goTo(req.params.zone, req.body.position);
   res.send('receive command for zone '+ req.params.zone + ' to go to position ' + req.body.position);
 })

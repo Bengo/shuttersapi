@@ -69,7 +69,6 @@ function initAutomaticShutters(){
     } 
   } else if(configRules.config.currentMode === "msd"){
     const todayDay = new Date().getDay();
-    console.log("todayDay: "+todayDay+"  setting normal");
 
     if(todayDay !== 0 && todayDay !== 6 && todayDay !== 3){
       configRules.config.currentMode = "normal";
@@ -82,6 +81,9 @@ function initAutomaticShutters(){
   initUpSchedulers(times);
 
   initDownSchedulers(times);
+
+  //intermediate position for today is not reached
+  configRules.config.today.intermediate = false;
  
 }
 
@@ -94,7 +96,6 @@ function getCurrentWeather() {
   // get a simple JSON Object with temperature, humidity, pressure and description
   weather.getSmartJSON(function(err, JSONObj){
       configRules.weather = JSONObj;
-      console.log(JSONObj);
   });
   
 }
@@ -102,9 +103,18 @@ function getCurrentWeather() {
 function checkIntermediate() {
   const currentWeather = configRules.weather;
   //if temp > 19 and weathercode (800,801,802) --> go To Intermediate position
-  if(currentWeather.temp >= 19 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
+  if(!configRules.config.today.intermediate && currentWeather.temp >= 19 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
     console.log('Set Intermediate Position because weather is:'+ JSON.stringify(currentWeather));
-    } 
+    const cmdshutters = new shutters();
+    //zone 1 (chbas) and 3 (pdv) 
+    cmdshutters.goTo('4','intermediate');
+    cmdshutters.goTo('3','intermediate');
+    //zone 2 only on mode normal + abscence
+    if(configRules.config.currentMode === "normal" || configRules.config.currentMode === "abscence") {
+      cmdshutters.goTo(2,'intermediate');
+    }
+    configRules.config.today.intermediate = true;
+  } 
 }
 
 exports.start = function (){
@@ -130,6 +140,7 @@ exports.start = function (){
       checkIntermediate();
     });
     
+    //check intermediate position after getting currentweather
     setTimeout(function(){
       checkIntermediate();
     },1000);
