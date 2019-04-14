@@ -105,13 +105,12 @@ function checkIntermediate() {
   //if temp > 19 and weathercode (800,801,802) --> go To Intermediate position
   if(!configRules.config.today.intermediate && currentWeather.temp >= 19 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
     console.log('Set Intermediate Position because weather is:'+ JSON.stringify(currentWeather));
-    const cmdshutters = new shutters();
     //zone 1 (chbas) and 3 (pdv) 
-    cmdshutters.goTo('4','intermediate');
-    cmdshutters.goTo('3','intermediate');
+    shutters.goTo('4','intermediate');
+    shutters.goTo('3','intermediate');
     //zone 2 only on mode normal + abscence
     if(configRules.config.currentMode === "normal" || configRules.config.currentMode === "abscence") {
-      cmdshutters.goTo(2,'intermediate');
+      shutters.goTo(2,'intermediate');
     }
     configRules.config.today.intermediate = true;
   } 
@@ -175,5 +174,7 @@ exports.infos = function (){
   infos.nextDaily = {};
   infos.nextDaily.date = new Date(dailyScheduler.nextInvocation()).toLocaleString();
   infos.weather = configRules.weather;
+
+  infos.mode = configRules.config.currentMode;
   return infos;
 };

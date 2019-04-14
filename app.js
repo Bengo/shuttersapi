@@ -12,7 +12,7 @@ var bodyParser = require('body-parser');
 var periodicRules = require('./modules/periodicrules');
 
 var app = express();
-app.set('port', process.env.SHUTTERS_API_PORT || 3000);
+app.set('port', 3000);
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(logger('dev'));
