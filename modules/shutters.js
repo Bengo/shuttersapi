@@ -7,9 +7,9 @@ function edge(pin, nbIter) {
     let i = 0 ;
     while(i<nbIter){
         pin.writeSync(1);
-        msleep(100);
+        sleep.msleep(100);
         pin.writeSync(0);
-        msleep(100);
+        sleep.msleep(100);
         i++;
     }
 }
