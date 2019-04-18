@@ -136,16 +136,10 @@ exports.start = function (){
       getCurrentWeather();
     }); 
 
-    //every hour between 7 and 18h
-    schedule.scheduleJob('55 7-21 * * *', function(){
+    //every hour between 10 and 18h
+    schedule.scheduleJob('15 10-18 * * *', function(){
       checkIntermediate();
-    });
-    
-    //check intermediate position after getting currentweather
-    setTimeout(function(){
-      checkIntermediate();
-    },1000);
-    
+    });   
 
 };
 
