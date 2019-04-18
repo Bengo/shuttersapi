@@ -112,7 +112,7 @@ function checkIntermediate() {
     shutters.goTo('3','intermediate');
     //zone 2 only on mode normal + abscence
     if(configRules.config.currentMode === "normal" || configRules.config.currentMode === "abscence") {
-      //shutters.goTo(2,'intermediate');
+      shutters.goTo(2,'intermediate');
     }
     configRules.config.today.intermediate = true;
   } 
