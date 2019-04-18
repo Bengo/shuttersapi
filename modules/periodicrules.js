@@ -61,20 +61,21 @@ function initDownSchedulers(times){
 function initAutomaticShutters(){
   //Saint-Renan
   const times = SunCalc.getTimes( new Date(), 48.4333, -4.6167);
-  //si mode normal , alors mercredi, samedi, dimanche on force le mode msd
-  if(configRules.config.currentMode === "normal"){
-    const todayDay = new Date().getDay()
-    if(todayDay === 0 || todayDay === 6 || todayDay === 3){
-      configRules.config.currentMode = "msd";
-    } 
-  } else if(configRules.config.currentMode === "msd"){
-    const todayDay = new Date().getDay();
+  if(!(configRules.config.currentMode === "vacances" || configRules.config.currentMode === "abscence")){
+    //si mode normal , alors mercredi, samedi, dimanche on force le mode msd
+    if(configRules.config.currentMode === "normal"){
+      const todayDay = new Date().getDay()
+      if(todayDay === 0 || todayDay === 6 || todayDay === 3){
+        configRules.config.currentMode = "msd";
+      } 
+    } else if(configRules.config.currentMode === "msd"){
+      const todayDay = new Date().getDay();
 
-    if(todayDay !== 0 && todayDay !== 6 && todayDay !== 3){
-      configRules.config.currentMode = "normal";
-    } 
+      if(todayDay !== 0 && todayDay !== 6 && todayDay !== 3){
+        configRules.config.currentMode = "normal";
+      } 
+    }
   }
-
   console.log(new Date() +" current mode " + configRules.config.currentMode);
   cancelSchedulers();
 
