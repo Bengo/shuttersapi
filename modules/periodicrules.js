@@ -102,16 +102,17 @@ function getCurrentWeather() {
 }
 
 function checkIntermediate() {
+  console.log('checkIntermediate');
   const currentWeather = configRules.weather;
   //if temp > 19 and weathercode (800,801,802) --> go To Intermediate position
-  if(!configRules.config.today.intermediate && currentWeather.temp >= 19 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
+  if(!configRules.config.today.intermediate && currentWeather.temp >= 10 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
     console.log('Set Intermediate Position because weather is:'+ JSON.stringify(currentWeather));
     //zone 1 (chbas) and 3 (pdv) 
-    shutters.goTo('4','intermediate');
+    shutters.goTo('1','intermediate');
     shutters.goTo('3','intermediate');
     //zone 2 only on mode normal + abscence
     if(configRules.config.currentMode === "normal" || configRules.config.currentMode === "abscence") {
-      shutters.goTo(2,'intermediate');
+      //shutters.goTo(2,'intermediate');
     }
     configRules.config.today.intermediate = true;
   } 
@@ -136,7 +137,7 @@ exports.start = function (){
     }); 
 
     //every hour between 7 and 18h
-    schedule.scheduleJob('15 7-18 * * *', function(){
+    schedule.scheduleJob('55 7-21 * * *', function(){
       checkIntermediate();
     });
     
