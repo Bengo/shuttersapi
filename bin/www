@@ -7,6 +7,7 @@
 var app = require('../app');
 var debug = require('debug')('shuttersapi:server');
 var http = require('http');
+var cors = require('cors');
 
 /**
  * Get port from environment and store in Express.
@@ -15,7 +16,7 @@ var http = require('http');
 var port = normalizePort(process.env.PORT || '3000');
 console.log("Express server starting on port "+port);
 app.set('port', port);
-
+app.use(cors());
 /**
  * Create HTTP server.
  */
