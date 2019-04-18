@@ -105,7 +105,7 @@ function checkIntermediate() {
   console.log('checkIntermediate');
   const currentWeather = configRules.weather;
   //if temp > 19 and weathercode (800,801,802) --> go To Intermediate position
-  if(!configRules.config.today.intermediate && currentWeather.temp >= 10 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
+  if(!configRules.config.today.intermediate && currentWeather.temp >= 19 && (currentWeather.weathercode === 800 || currentWeather.weathercode === 801 || currentWeather.weathercode === 802 )){
     console.log('Set Intermediate Position because weather is:'+ JSON.stringify(currentWeather));
     //zone 1 (chbas) and 3 (pdv) 
     shutters.goTo('1','intermediate');
