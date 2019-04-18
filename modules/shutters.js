@@ -27,11 +27,11 @@ function actionPin(pin, position){
         // top
         edge(pin, 3);
         //on attend que les volets soient leves
-        _sleep(18);
+        sleep.msleep(18000);
         //bottom
         edge(pin, 4);
         //on attend d'atteindre le position intermediaire
-        msleep(8800);
+        sleep.msleep(8800);
         //stop
         edge(pin, 1);
     }
